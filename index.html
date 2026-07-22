@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varanda Panificadora — Cardápio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <div class="brand">
+      <span class="brand__mark">🥖</span>
+      <span class="brand__name">Varanda Panificadora</span>
+    </div>
+    <div class="topbar__hours"></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__inner">
+    <p class="hero__eyebrow">Cardápio digital</p>
+    <h1 class="hero__title">Feito fresco todo dia,<br>pedido em um clique.</h1>
+    <p class="hero__sub">Escolha os itens, monte sua sacola e finalize pelo WhatsApp em poucos toques.</p>
+  </div>
+</section>
+
+<main class="menu" id="menu">
+  <!-- As categorias e itens são renderizados aqui via JS a partir de items.js -->
+</main>
+
+<footer class="footer">
+  <p>Varanda Panificadora · Rua Exemplo, 123 · (77) 99999-9999</p>
+  <p class="footer__note">Cardápio criado por <strong>[seu nome]</strong></p>
+</footer>
+
+<!-- Botão flutuante da sacola -->
+<button class="cart-fab" id="cartFab" aria-label="Ver sacola">
+  <span class="cart-fab__icon">🛍️</span>
+  <span class="cart-fab__count" id="cartCount">0</span>
+</button>
+
+<!-- Painel da sacola -->
+<div class="cart-panel" id="cartPanel" aria-hidden="true">
+  <div class="cart-panel__header">
+    <h2>Sua sacola</h2>
+    <button class="cart-panel__close" id="cartClose" aria-label="Fechar">✕</button>
+  </div>
+  <div class="cart-panel__items" id="cartItems">
+    <p class="cart-panel__empty" id="cartEmpty">Sua sacola está vazia. Adicione itens do cardápio ao lado.</p>
+  </div>
+
+  <div class="cart-panel__details">
+    <p class="cart-panel__section-title">Seus dados</p>
+
+    <label class="field">
+      <span class="field__label">Nome *</span>
+      <input type="text" id="fieldNome" placeholder="Seu nome" autocomplete="name">
+    </label>
+
+    <label class="field">
+      <span class="field__label">Telefone (opcional)</span>
+      <input type="tel" id="fieldTelefone" placeholder="(77) 99999-9999" autocomplete="tel">
+    </label>
+
+    <p class="cart-panel__section-title">Tipo de entrega</p>
+    <div class="toggle-group" id="tipoEntregaGroup">
+      <button type="button" class="toggle-chip is-active" data-value="Retirada no local">Retirada no local</button>
+      <button type="button" class="toggle-chip" data-value="Entregar no endereço">Entrega no endereço</button>
+    </div>
+
+    <label class="field is-hidden" id="fieldEnderecoWrap">
+      <span class="field__label">Endereço de entrega *</span>
+      <input type="text" id="fieldEndereco" placeholder="Rua, número, bairro">
+    </label>
+
+    <p class="cart-panel__section-title">Forma de pagamento</p>
+    <div class="toggle-group" id="pagamentoGroup">
+      <button type="button" class="toggle-chip is-active" data-value="Pix">Pix</button>
+      <button type="button" class="toggle-chip" data-value="Dinheiro">Dinheiro</button>
+      <button type="button" class="toggle-chip" data-value="Cartão">Cartão</button>
+    </div>
+
+    <label class="field">
+      <span class="field__label">Observação (opcional)</span>
+      <input type="text" id="fieldObs" placeholder="Ex: sem açúcar, troco pra R$50...">
+    </label>
+  </div>
+
+  <div class="cart-panel__footer">
+    <div class="cart-panel__total">
+      <span>Total</span>
+      <span id="cartTotal">R$ 0,00</span>
+    </div>
+    <button class="cart-panel__checkout" id="checkoutBtn">Fazer pedido no WhatsApp</button>
+  </div>
+</div>
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<script src="items.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+/* ============================================================
+   TOKENS — troque só estas variáveis pra usar a identidade
+   visual real do cliente (cores, fontes já definidas por ele).
+   ============================================================ */
+:root {
+  --coffee:      #250111; /* vinho escuro (letreiro Varanda) — header, hero, textos fortes */
+  --paper:       #F7EEDD; /* creme farinha — fundo geral */
+  --crust:       #7A2E3A; /* vinho médio — títulos sobre fundo claro */
+  --wheat:       #C9A227; /* dourado trigo (ícone da logo) — detalhes, bordas, hover */
+  --cherry:      #9C2B3E; /* vermelho vinho — poucos destaques pontuais */
+  --whatsapp:    #25D366; /* verde oficial do WhatsApp — só no CTA de pedido */
+  --card-bg:     #FFFFFF;
+  --line:        rgba(92, 27, 40, 0.14);
+
+  --font-display: "Fraunces", serif;
+  --font-body:    "Work Sans", sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
+
+  --radius: 10px;
+  --tap: 44px; /* tamanho mínimo recomendado de área de toque */
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--coffee);
+  font-family: var(--font-body);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+/* ============================================================
+   MOBILE-FIRST — tudo abaixo é a base pensada pro celular.
+   As media queries (min-width) só ampliam pra telas maiores.
+   ============================================================ */
+
+/* ---------- Topbar ---------- */
+.topbar {
+  background: var(--coffee);
+  color: var(--paper);
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+.topbar__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.brand { display: flex; align-items: center; gap: 8px; }
+.brand__mark { font-size: 20px; }
+.brand__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  background: var(--coffee);
+  color: var(--paper);
+  padding: 28px 16px 36px;
+  border-bottom: 4px dashed var(--wheat);
+}
+.hero__inner { max-width: 700px; margin: 0 auto; text-align: center; }
+.hero__eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 11px;
+  color: var(--wheat);
+  margin: 0 0 8px;
+}
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 0 0 12px;
+}
+.hero__sub {
+  font-size: 14.5px;
+  color: rgba(247, 238, 221, 0.8);
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+/* ---------- Menu ---------- */
+.menu {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px 90px; /* espaço extra embaixo pro FAB não tampar o último item */
+}
+.category { margin-top: 36px; }
+.category:first-child { margin-top: 28px; }
+.category__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  color: var(--crust);
+  margin: 0 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--line);
+}
+
+/* Uma coluna por padrão — lista é mais fácil de escanear no polegar */
+.item-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.item-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--line);
+  position: relative;
+}
+/* Espaço reservado da foto — sempre existe, com ou sem imagem real */
+.item-card__photo-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  background: var(--paper);
+  border: 1px dashed var(--wheat);
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.item-card__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Enquanto não tem foto real, mostra um ícone discreto no lugar */
+.item-card__photo-wrap.is-empty::after {
+  content: "🥖";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  opacity: 0.45;
+}
+.item-card__info { flex: 1; min-width: 0; }
+.item-card__name {
+  font-weight: 600;
+  font-size: 14.5px;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+.item-card__price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--cherry);
+}
+/* Botão de adicionar é a ação principal do card — tamanho de toque confortável */
+.item-card__add {
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 50%;
+  border: none;
+  background: var(--crust);
+  color: var(--paper);
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.item-card__add:active { transform: scale(0.9); background: var(--cherry); }
+.item-card__add.is-added { background: var(--whatsapp); }
+
+/* ---------- Footer ---------- */
+.footer {
+  text-align: center;
+  padding: 24px 16px 110px;
+  font-size: 12.5px;
+  color: rgba(92, 27, 40, 0.6);
+}
+.footer__note { margin-top: 4px; font-size: 11.5px; }
+
+/* ---------- Cart FAB ---------- */
+/* Fixo, largo o bastante pro polegar, sempre acessível com uma mão */
+.cart-fab {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  left: 16px;
+  background: var(--crust);
+  color: var(--paper);
+  border: none;
+  border-radius: 999px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(92, 27, 40, 0.3);
+  z-index: 40;
+  min-height: var(--tap);
+}
+.cart-fab__count {
+  background: var(--whatsapp);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+
+/* ---------- Cart panel ---------- */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(92, 27, 40, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 45;
+}
+.cart-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+/* No celular a sacola ocupa a tela toda — mais espaço pra ajustar quantidade */
+.cart-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  background: var(--paper);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  box-shadow: -8px 0 24px rgba(92, 27, 40, 0.2);
+}
+.cart-panel.is-open { transform: translateX(0); }
+
+.cart-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.cart-panel__header h2 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  margin: 0;
+  color: var(--crust);
+}
+.cart-panel__close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--coffee);
+  width: var(--tap);
+  height: var(--tap);
+}
+
+.cart-panel__items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.cart-panel__empty {
+  font-size: 13.5px;
+  color: rgba(92, 27, 40, 0.6);
+  text-align: center;
+  margin-top: 30px;
+}
+
+.cart-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line);
+  flex-wrap: wrap;
+}
+.cart-line__name {
+  flex: 1 1 100%;
+  font-size: 14px;
+  font-weight: 500;
+}
+.cart-line__qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* Botões de +/- do carrinho também em tamanho de toque confortável */
+.cart-line__qty button {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+.cart-line__qty span {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  min-width: 20px;
+  text-align: center;
+}
+.cart-line__price {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  color: var(--cherry);
+  margin-left: auto;
+}
+
+/* ---------- Formulário de dados do pedido ---------- */
+.cart-panel__details {
+  padding: 4px 16px 12px;
+  border-top: 1px solid var(--line);
+}
+.cart-panel__section-title {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 11px;
+  color: var(--crust);
+  margin: 14px 0 8px;
+}
+.field {
+  display: block;
+  margin-bottom: 10px;
+}
+.field.is-hidden { display: none; }
+.field__label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: var(--coffee);
+}
+.field input {
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  color: var(--coffee);
+  min-height: var(--tap);
+}
+.field input:focus {
+  outline: none;
+  border-color: var(--wheat);
+}
+.field input.has-error {
+  border-color: var(--cherry);
+}
+
+.toggle-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.toggle-chip {
+  flex: 1 1 auto;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--coffee);
+  cursor: pointer;
+  min-height: 40px;
+  white-space: nowrap;
+}
+.toggle-chip.is-active {
+  background: var(--crust);
+  border-color: var(--crust);
+  color: var(--paper);
+}
+
+.cart-panel__footer {
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line);
+}
+.cart-panel__total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 15.5px;
+}
+#cartTotal { font-family: var(--font-mono); color: var(--crust); }
+
+.cart-panel__checkout {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--whatsapp);
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  min-height: var(--tap);
+}
+.cart-panel__checkout:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   TABLET — a partir daqui a tela sobra espaço, então a grade
+   ganha colunas e a sacola vira painel lateral em vez de tela cheia.
+   ============================================================ */
+@media (min-width: 600px) {
+  .item-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero { padding: 36px 20px 48px; }
+  .hero__title { font-size: 32px; }
+  .cart-panel { width: min(380px, 90vw); }
+  .cart-fab { left: auto; width: auto; }
+}
+
+/* ============================================================
+   DESKTOP — layout mais respirado, hover states fazem sentido
+   porque existe mouse.
+   ============================================================ */
+@media (min-width: 900px) {
+  body { font-size: 16px; }
+  .topbar { padding: 14px 20px; }
+  .brand__name { font-size: 20px; }
+
+  .hero { padding: 40px 20px 56px; }
+  .hero__title { font-size: clamp(32px, 4vw, 42px); }
+  .hero__sub { font-size: 16px; }
+
+  .menu { padding-bottom: 60px; }
+  .category { margin-top: 48px; }
+  .category__title { font-size: 24px; }
+
+  .item-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .item-card__add:hover { background: var(--cherry); }
+
+  .cart-fab:hover { transform: translateY(-2px); }
+  .cart-fab { transition: transform 0.15s ease; }
+
+  .cart-line { flex-wrap: nowrap; }
+  .cart-line__name { flex: 1 1 auto; }
+}
