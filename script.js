@@ -161,11 +161,13 @@ function openCart() {
   cartPanel.classList.add("is-open");
   cartOverlay.classList.add("is-open");
   cartPanel.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden"; // trava o scroll de fundo (evita o iOS arrastar a página por trás do painel)
 }
 function closeCart() {
   cartPanel.classList.remove("is-open");
   cartOverlay.classList.remove("is-open");
   cartPanel.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = ""; // libera o scroll da página normalmente
 }
 cartFab.addEventListener("click", openCart);
 cartClose.addEventListener("click", closeCart);

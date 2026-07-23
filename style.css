@@ -3,7 +3,7 @@
    visual real do cliente (cores, fontes já definidas por ele).
    ============================================================ */
 :root {
-  --coffee:      #250111; /* vinho escuro (letreiro Varanda) — header, hero, textos fortes */
+  --coffee:      #5C1B28; /* vinho escuro (letreiro Varanda) — header, hero, textos fortes */
   --paper:       #F7EEDD; /* creme farinha — fundo geral */
   --crust:       #7A2E3A; /* vinho médio — títulos sobre fundo claro */
   --wheat:       #C9A227; /* dourado trigo (ícone da logo) — detalhes, bordas, hover */
@@ -288,6 +288,7 @@ img { max-width: 100%; display: block; }
 
 .cart-panel__items {
   flex: 1;
+  min-height: 0; /* essencial: sem isso o flex item não encolhe e o overflow-y nunca ativa */
   overflow-y: auto;
   padding: 8px 16px;
   -webkit-overflow-scrolling: touch;
