@@ -1,17 +1,28 @@
 // ============================================================
 // ITENS DO CARDÁPIO — Varanda Panificadora
+// Edite só este arquivo pra atualizar produtos, preços e fotos.
 // Não precisa mexer no HTML, CSS ou no script.js.
 // ============================================================
 
 const MENU_ITEMS = [
   // ---- Bolos ----
   { id: "bolo-iogurte",      categoria: "Bolos",    nome: "Bolo de iogurte",                 preco: 10.00, foto: "img/bolo-iogurte.png" },
-  { id: "bolo-coco-1",       categoria: "Bolos",    nome: "Bolo de coco (opção 1)",          preco: 15.00, foto: "img/bolo-coco.png" },
-  { id: "bolo-coco-2",       categoria: "Bolos",    nome: "Bolo de coco (opção 2)",          preco: 10.00, foto: "img/bolo-coco.png" },
-  { id: "bolo-limao",        categoria: "Bolos",    nome: "Bolo de limão",                   preco: 15.00, foto: "img/bolo-limao.jpg" },
+  { id: "bolo-coco-1",       categoria: "Bolos",    nome: "Bolo de coco (opção 1)",          preco: 15.00, foto: "img/bolo-coco-1.png" },
+  { id: "bolo-coco-2",       categoria: "Bolos",    nome: "Bolo de coco (opção 2)",          preco: 10.00, foto: "img/bolo-coco-2.png" },
+  { id: "bolo-limao",        categoria: "Bolos",    nome: "Bolo de limão",                   preco: 15.00, foto: "img/bolo-limao.png" },
   { id: "bolo-cenoura-choc", categoria: "Bolos",    nome: "Bolo de cenoura com chocolate",   preco: 15.00, foto: "img/bolo-cenoura-choc.png" },
   { id: "bolo-pote",         categoria: "Bolos",    nome: "Bolo de pote",                    preco: 12.00, foto: "img/bolo-pote.png" },
   { id: "bolo-arroz",        categoria: "Bolos",    nome: "Bolo de arroz",                   preco: 10.00, foto: "img/bolo-arroz.png" },
+  { id: "bolo-chocolate",    categoria: "Bolos",    nome: "Bolo de chocolate",               preco: 15.00, foto: "img/bolo-chocolate-bono.png" },
+
+  // ---- Bebidas ----
+  { id: "coca-2l-zero",      categoria: "Bebidas",  nome: "Coca-Cola Zero Açúcar 2L",        preco: 12.00, foto: "img/coca-2l-zero.png" },
+  { id: "coca-2l-original",  categoria: "Bebidas",  nome: "Coca-Cola Original 2L",           preco: 12.00, foto: "img/coca-2l-original.png" },
+  { id: "coca-lata-zero",    categoria: "Bebidas",  nome: "Coca-Cola Zero Açúcar lata 350ml", preco: 5.00,  foto: "img/coca-lata-zero.png" },
+  { id: "coca-lata-original", categoria: "Bebidas", nome: "Coca-Cola Original lata 350ml",   preco: 5.00,  foto: "img/coca-lata-original.png" },
+  { id: "toddynho",          categoria: "Bebidas",  nome: "Toddynho 200ml",                  preco: 4.00,  foto: "img/toddynho.png" },
+  { id: "monster-energy",    categoria: "Bebidas",  nome: "Monster Energy Zero Açucar",       preco: 10.00, foto: "img/monster-energy.png" },
+  { id: "delvalle-uva",      categoria: "Bebidas",  nome: "Del Valle Kapo Uva 200ml",        preco: 3.50,  foto: "img/delvalle-uva.png" },
 
   // ---- Salgados ----
   { id: "empada-frango",     categoria: "Salgados", nome: "Empada de frango",                preco: 6.00,  foto: "img/espada-frango.png" },
