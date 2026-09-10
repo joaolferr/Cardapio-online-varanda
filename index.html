@@ -13,10 +13,9 @@
 <header class="topbar">
   <div class="topbar__inner">
     <div class="brand">
-      <span class="brand__mark">🥖</span>
+      <span class="brand__mark">🌾</span>
       <span class="brand__name">Varanda Panificadora</span>
     </div>
-    <div class="topbar__hours"></div>
   </div>
 </header>
 
@@ -28,13 +27,17 @@
   </div>
 </section>
 
+<nav class="category-nav" id="categoryNav">
+  <div class="category-nav__inner" id="categoryNavInner"></div>
+</nav>
+
 <main class="menu" id="menu">
+
   <!-- As categorias e itens são renderizados aqui via JS a partir de items.js -->
 </main>
 
 <footer class="footer">
-  <p>Varanda Panificadora · Av do Trabalho, 5149 · (77) 9 9826-4646</p>
-  <p class="footer__note">Cardápio criado por <strong>@joaolferr</strong></p>
+  <p>Varanda Panificadora</p>
 </footer>
 
 <!-- Botão flutuante da sacola -->
@@ -99,6 +102,15 @@
   </div>
 </div>
 <div class="cart-overlay" id="cartOverlay"></div>
+
+<!-- Popup de foto ampliada -->
+<div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+  <button class="photo-lightbox__close" id="photoLightboxClose" aria-label="Fechar">✕</button>
+  <figure class="photo-lightbox__content">
+    <img src="" alt="" id="photoLightboxImg">
+    <figcaption id="photoLightboxCaption"></figcaption>
+  </figure>
+</div>
 
 <script src="items.js"></script>
 <script src="script.js"></script>

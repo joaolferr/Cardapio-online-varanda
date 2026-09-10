@@ -81,6 +81,89 @@ img { max-width: 100%; display: block; }
   color: var(--wheat);
   margin: 0 0 8px;
 }
+
+/* ---------- Barra de navegação de categorias ---------- */
+.category-nav {
+  position: sticky;
+  top: var(--topbar-h, 0px); /* ajustado via JS pra grudar exatamente embaixo do cabeçalho */
+  z-index: 25;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.category-nav__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  position: relative; /* referência pro dropdown se posicionar embaixo */
+}
+
+/* Botão que abre o dropdown (só aparece no mobile) */
+.category-nav__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--crust);
+  cursor: pointer;
+  min-height: var(--tap);
+}
+.category-nav__chevron {
+  transition: transform 0.15s ease;
+  color: var(--wheat);
+}
+.category-nav__toggle.is-open .category-nav__chevron { transform: rotate(180deg); }
+
+/* Lista de categorias — no mobile é um dropdown que abre por cima do conteúdo */
+.category-nav__list {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: calc(100% + 4px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(92, 27, 40, 0.18);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.2s ease, opacity 0.15s ease;
+  z-index: 26;
+}
+.category-nav__list.is-open {
+  max-height: 60vh;
+  opacity: 1;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+.category-nav__pill {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--coffee);
+  cursor: pointer;
+  min-height: var(--tap);
+}
+.category-nav__pill:last-child { border-bottom: none; }
+.category-nav__pill.is-active {
+  background: var(--paper);
+  color: var(--crust);
+  font-weight: 700;
+}
 .hero__title {
   font-family: var(--font-display);
   font-weight: 600;
@@ -101,7 +184,10 @@ img { max-width: 100%; display: block; }
   margin: 0 auto;
   padding: 0 16px 90px; /* espaço extra embaixo pro FAB não tampar o último item */
 }
-.category { margin-top: 36px; }
+.category {
+  margin-top: 36px;
+  scroll-margin-top: calc(var(--topbar-h, 0px) + 60px); /* espaço pra não ficar embaixo do cabeçalho + barra de categorias */
+}
 .category:first-child { margin-top: 28px; }
 .category__title {
   font-family: var(--font-display);
@@ -232,6 +318,65 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: center;
   padding: 0 5px;
+}
+
+/* Indica que a miniatura é clicável */
+.item-card__photo-wrap {
+  cursor: pointer;
+}
+.item-card__photo-wrap.is-empty {
+  cursor: default;
+}
+
+/* ---------- Popup (lightbox) da foto ampliada ---------- */
+.photo-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 8, 12, 0.88);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.photo-lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.photo-lightbox__content {
+  margin: 0;
+  max-width: min(90vw, 480px);
+  text-align: center;
+}
+.photo-lightbox__content img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid var(--wheat);
+  display: block;
+}
+.photo-lightbox__content figcaption {
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  margin-top: 14px;
+}
+.photo-lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--paper);
+  font-size: 20px;
+  cursor: pointer;
 }
 
 /* ---------- Cart panel ---------- */
@@ -481,6 +626,41 @@ img { max-width: 100%; display: block; }
 
   .item-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
   .item-card__add:hover { background: var(--cherry); }
+
+  /* Categorias: no desktop vira uma linha de pills alinhada com a grade de itens abaixo */
+  .category-nav__inner { padding: 12px 16px; }
+  .category-nav__toggle { display: none; } /* o botão de dropdown só existe no mobile */
+  .category-nav__list {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-height: none;
+    opacity: 1;
+    overflow: visible;
+    pointer-events: auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+  .category-nav__pill {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 9px 16px;
+    min-height: 38px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--crust);
+  }
+  .category-nav__pill.is-active {
+    background: var(--crust);
+    color: var(--paper);
+    border-color: var(--crust);
+    font-weight: 600;
+  }
 
   .cart-fab:hover { transform: translateY(-2px); }
   .cart-fab { transition: transform 0.15s ease; }

@@ -26,6 +26,14 @@ const pagamentoGroup   = document.getElementById("pagamentoGroup");
 let tipoEntrega = "Retirada no local";
 let formaPagamento = "Pix";
 
+function slugifyCategoria(nome) {
+  return nome
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove acentos
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 // ---------- Renderiza o cardápio agrupado por categoria ----------
 function renderMenu() {
   const categorias = [...new Set(MENU_ITEMS.map(item => item.categoria))];
@@ -35,12 +43,13 @@ function renderMenu() {
 
     const section = document.createElement("section");
     section.className = "category";
+    section.id = `cat-${slugifyCategoria(categoria)}`;
     section.innerHTML = `
       <h2 class="category__title">${categoria}</h2>
       <div class="item-grid">
         ${itensDaCategoria.map(item => `
           <div class="item-card" data-id="${item.id}">
-            <div class="item-card__photo-wrap">
+            <div class="item-card__photo-wrap" data-foto="${item.foto}" data-nome="${item.nome}" role="button" tabindex="0" aria-label="Ampliar foto de ${item.nome}">
               <img class="item-card__photo" src="${item.foto}" alt="${item.nome}" loading="lazy"
                    onerror="this.closest('.item-card__photo-wrap').classList.add('is-empty'); this.remove()">
             </div>
@@ -56,8 +65,15 @@ function renderMenu() {
     menuEl.appendChild(section);
   });
 
+  renderCategoryNav(categorias);
+
   // Um listener só, delegado no container (mais leve que um por botão)
   menuEl.addEventListener("click", (e) => {
+    const photo = e.target.closest(".item-card__photo-wrap");
+    if (photo && !photo.classList.contains("is-empty")) {
+      openLightbox(photo.dataset.foto, photo.dataset.nome);
+      return;
+    }
     const btn = e.target.closest(".item-card__add");
     if (!btn) return;
     addToCart(btn.dataset.id);
@@ -67,6 +83,134 @@ function renderMenu() {
       btn.classList.remove("is-added");
       btn.textContent = "+";
     }, 600);
+  });
+
+  // Permite abrir o popup também pelo teclado (acessibilidade)
+  menuEl.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const photo = e.target.closest(".item-card__photo-wrap");
+    if (!photo || photo.classList.contains("is-empty")) return;
+    e.preventDefault();
+    openLightbox(photo.dataset.foto, photo.dataset.nome);
+  });
+}
+
+// ---------- Barra de navegação de categorias ----------
+const categoryNavEl      = document.getElementById("categoryNav");
+const categoryNavInnerEl = document.getElementById("categoryNavInner");
+
+function renderCategoryNav(categorias) {
+  if (!categoryNavEl || !categoryNavInnerEl) return;
+
+  categoryNavInnerEl.innerHTML = `
+    <button class="category-nav__toggle" id="categoryNavToggle" aria-expanded="false">
+      <span id="categoryNavLabel">${categorias[0]}</span>
+      <span class="category-nav__chevron">▾</span>
+    </button>
+    <div class="category-nav__list" id="categoryNavList" role="menu">
+      ${categorias.map(categoria => `
+        <button class="category-nav__pill" data-target="cat-${slugifyCategoria(categoria)}" role="menuitem">${categoria}</button>
+      `).join("")}
+    </div>
+  `;
+
+  const toggle = document.getElementById("categoryNavToggle");
+  const list   = document.getElementById("categoryNavList");
+  const label  = document.getElementById("categoryNavLabel");
+
+  function abrirDropdown(aberto) {
+    list.classList.toggle("is-open", aberto);
+    toggle.classList.toggle("is-open", aberto);
+    toggle.setAttribute("aria-expanded", String(aberto));
+  }
+
+  // Abre/fecha o dropdown (só tem efeito visual no mobile — no desktop o botão fica escondido)
+  toggle.addEventListener("click", () => abrirDropdown(!list.classList.contains("is-open")));
+
+  // Clicar fora fecha o dropdown
+  document.addEventListener("click", (e) => {
+    if (!categoryNavEl.contains(e.target)) abrirDropdown(false);
+  });
+
+  // Esc também fecha
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") abrirDropdown(false);
+  });
+
+  categoryNavEl.addEventListener("click", (e) => {
+    const pill = e.target.closest(".category-nav__pill");
+    if (!pill) return;
+    const target = document.getElementById(pill.dataset.target);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    label.textContent = pill.textContent;
+    abrirDropdown(false);
+  });
+
+  // Destaca o pill da categoria visível na tela (e atualiza o rótulo do dropdown) enquanto o usuário rola
+  const secoes = categorias.map(c => document.getElementById(`cat-${slugifyCategoria(c)}`)).filter(Boolean);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const idAtivo = entry.target.id;
+      categoryNavEl.querySelectorAll(".category-nav__pill").forEach(pill => {
+        const ativo = pill.dataset.target === idAtivo;
+        pill.classList.toggle("is-active", ativo);
+        if (ativo) label.textContent = pill.textContent;
+      });
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" }); // considera "ativa" a seção que cruza a faixa central da tela
+
+  secoes.forEach(secao => observer.observe(secao));
+}
+
+// Mantém a barra de categorias grudada exatamente embaixo do cabeçalho, em qualquer tamanho de tela
+function ajustarAlturaTopbar() {
+  const topbar = document.querySelector(".topbar");
+  if (!topbar) return;
+  document.documentElement.style.setProperty("--topbar-h", `${topbar.offsetHeight}px`);
+}
+window.addEventListener("resize", ajustarAlturaTopbar);
+ajustarAlturaTopbar();
+
+// ---------- Popup (lightbox) da foto ampliada ----------
+const photoLightbox        = document.getElementById("photoLightbox");
+const photoLightboxImg     = document.getElementById("photoLightboxImg");
+const photoLightboxCaption = document.getElementById("photoLightboxCaption");
+const photoLightboxClose   = document.getElementById("photoLightboxClose");
+
+function openLightbox(foto, nome) {
+  if (!photoLightbox) return; // proteção: se o popup não existir no HTML, não quebra o resto do site
+  photoLightboxImg.src = foto;
+  photoLightboxImg.alt = nome;
+  photoLightboxCaption.textContent = nome;
+  photoLightbox.classList.add("is-open");
+  photoLightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  if (!photoLightbox) return;
+  photoLightbox.classList.remove("is-open");
+  photoLightbox.setAttribute("aria-hidden", "true");
+  photoLightboxImg.src = ""; // libera a imagem da memória
+  // só libera o scroll do body se o carrinho também não estiver aberto
+  if (!cartPanel.classList.contains("is-open")) {
+    document.body.style.overflow = "";
+  }
+}
+
+// Só registra os eventos do popup se todos os elementos existirem no HTML
+if (photoLightbox && photoLightboxImg && photoLightboxCaption && photoLightboxClose) {
+  photoLightboxClose.addEventListener("click", closeLightbox);
+
+  // Clique fora da foto (no fundo escuro) fecha o popup
+  photoLightbox.addEventListener("click", (e) => {
+    if (e.target === photoLightbox) closeLightbox();
+  });
+
+  // Tecla Esc também fecha
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && photoLightbox.classList.contains("is-open")) closeLightbox();
   });
 }
 
@@ -243,5 +387,9 @@ checkoutBtn.addEventListener("click", () => {
 });
 
 // ---------- Init ----------
-renderMenu();
-renderCart();
+try {
+  renderMenu();
+  renderCart();
+} catch (erro) {
+  console.error("Erro ao carregar o cardápio:", erro);
+}

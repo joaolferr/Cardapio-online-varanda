@@ -16,16 +16,17 @@ const MENU_ITEMS = [
   { id: "bolo-chocolate",    categoria: "Bolos",    nome: "Bolo de chocolate",               preco: 15.00, foto: "img/bolo-chocolate-bono.jpg" },
 
   // ---- Bebidas ----
+  // Preços de mercado padrão (estimativa) — ajuste pelos valores reais da padaria
   { id: "coca-2l-zero",      categoria: "Bebidas",  nome: "Coca-Cola Zero Açúcar 2L",        preco: 12.00, foto: "img/coca-2l-zero.jpg" },
   { id: "coca-2l-original",  categoria: "Bebidas",  nome: "Coca-Cola Original 2L",           preco: 12.00, foto: "img/coca-2l-original.jpg" },
   { id: "coca-lata-zero",    categoria: "Bebidas",  nome: "Coca-Cola Zero Açúcar lata 350ml", preco: 5.00,  foto: "img/coca-lata-zero.jpg" },
   { id: "coca-lata-original", categoria: "Bebidas", nome: "Coca-Cola Original lata 350ml",   preco: 5.00,  foto: "img/coca-lata-original.jpg" },
   { id: "toddynho",          categoria: "Bebidas",  nome: "Toddynho 200ml",                  preco: 4.00,  foto: "img/toddynho.jpg" },
-  { id: "monster-energy",    categoria: "Bebidas",  nome: "Monster Energy Zero Açucar",       preco: 10.00, foto: "img/monster-energy.jpg" },
+  { id: "monster-energy",    categoria: "Bebidas",  nome: "Monster Energy Zero Sugar",       preco: 10.00, foto: "img/monster-energy.jpg" },
   { id: "delvalle-uva",      categoria: "Bebidas",  nome: "Del Valle Kapo Uva 200ml",        preco: 3.50,  foto: "img/delvalle-uva.jpg" },
 
   // ---- Salgados ----
-  { id: "empada-frango",     categoria: "Salgados", nome: "Empada de frango",                preco: 6.00,  foto: "img/espada-frango.jpg" },
+  { id: "empada-frango",     categoria: "Salgados", nome: "Empada de frango",                preco: 6.00,  foto: "img/empada-frango.jpg" },
   { id: "quiche-carne-seca", categoria: "Salgados", nome: "Quiche de carne seca com banana da terra", preco: 12.00, foto: "img/quiche-carne-seca.jpg" },
   { id: "chipa",             categoria: "Salgados", nome: "Chipa",                           preco: 2.00,  foto: "img/chipa.jpg" },
   { id: "chimango",          categoria: "Salgados", nome: "Chimango",                        preco: 2.00,  foto: "img/chimango.jpg" },
@@ -35,12 +36,21 @@ const MENU_ITEMS = [
   { id: "torta-frango",      categoria: "Salgados", nome: "Torta de frango",                 preco: 6.00,  foto: "img/torta-frango.jpg" },
   { id: "pastel-carne-seca", categoria: "Salgados", nome: "Pastel assado de carne seca",     preco: 8.00,  foto: "img/pastel-carne-seca.jpg" },
   { id: "torta-frango-peq",  categoria: "Salgados", nome: "Torta de frango pequena",         preco: 4.00,  foto: "img/torta-frango-peq.jpg" },
+  { id: "crepioca-carne-seca",  categoria: "Salgados", nome: "Crepioca de carne seca",         preco: 12.00,  foto: "img/crepioca-carne-seca.jpg" },
+  { id: "crepioca-de-frango",  categoria: "Salgados", nome: "Crepioca de frango",         preco: 10.00,  foto: "img/crepioca-de-frango.jpg" },
 
   // ---- Doces ----
   { id: "donuts",            categoria: "Doces",    nome: "Donuts",                          preco: 5.00,  foto: "img/donuts.jpg" },
   { id: "sonho-doce-leite",  categoria: "Doces",    nome: "Sonho de doce de leite",          preco: 3.00,  foto: "img/sonho.jpg" },
   { id: "sonho-goiabada",    categoria: "Doces",    nome: "Sonho de goiabada",               preco: 3.00,  foto: "img/sonho.jpg" },
+
+  // ---- Lanches ----
+  { id: "pao-na-chapa",      categoria: "Lanches",  nome: "Pão na chapa",                    preco: 3.00,  foto: "img/pao-na-chapa.jpg" },
+  { id: "pao-queijo-lanche", categoria: "Lanches",  nome: "Pão com queijo",                  preco: 5.00,  foto: "img/pao-com-queijo.jpg" },
+  { id: "pao-presunto-queijo", categoria: "Lanches", nome: "Pão com presunto e queijo",      preco: 6.00,  foto: "img/pao-presunto-queijo.jpg" },
+  { id: "pao-ovo",           categoria: "Lanches",  nome: "Pão com ovo",                     preco: 5.00,  foto: "img/pao-com-ovo.jpg" },
+  { id: "pao-presunto-queijo-ovo", categoria: "Lanches", nome: "Pão com presunto, queijo e ovo", preco: 8.00, foto: "img/pao-presunto-queijo-ovo.jpg" },
+  { id: "pao-hamburguer-completo", categoria: "Lanches", nome: "Pão com hambúrguer, presunto, queijo e ovo", preco: 10.00, foto: "img/pao-hamburguer-presunto-queijo-ovo.jpg" },
 ];
 
-// Número de WhatsApp da padaria (formato: código do país + DDD + número, sem espaços ou símbolos)
-const WHATSAPP_NUMBER = "5577991541249";
+const WHATSAPP_NUMBER = "5577999999999";
