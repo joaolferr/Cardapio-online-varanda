@@ -53,4 +53,4 @@ const MENU_ITEMS = [
   { id: "pao-hamburguer-completo", categoria: "Lanches", nome: "Pão com hambúrguer, presunto, queijo e ovo", preco: 10.00, foto: "img/pao-hamburguer-presunto-queijo-ovo.jpg" },
 ];
 
-const WHATSAPP_NUMBER = "5577999999999";
+const WHATSAPP_NUMBER = "5577999079255";
